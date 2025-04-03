@@ -1,25 +1,46 @@
-
-# Student Grade Tracker
+# List of students with their grades
 students = [
     ("Alice", [85, 90, 78, 92]),
     ("Bob", [60, 65, 70, 75]),
     ("Charlie", [40, 45, 50, 55]),
-    ("David", [95, 100, 98, 92])
+    ("David", [90, 74, 82, 67])
 ]
-Student_grade= create_student_grade(students)
 
-def create_student_grade(students):
-    student_grade= {}
-    for name, grades in students:
-        student_grade[name]=grades
-    return student_grade
-print("Dictionary of student grades:",student_grade)
+# Creating an empty dictionary to store student grades
+grades_dict = {}
 
-def Calculating_Average(grades):
-    return sum(grades)/len(grades) if grades else 0.0
+# Storing student names as keys and their grades as values
+for student in students:
+    name = student[0]
+    grades = student[1]
+    grades_dict[name] = grades
 
-def Highest_grade()
+# Printing the dictionary
+print("Student Grades Dictionary:", grades_dict)
 
-    
+# Creating a dictionary to store average grades
+averages = {}
+pass_count = 0
+highest_avg = 0
+top_student = ""
 
+# Calculating average grades and finding the highest average
+for name in grades_dict:
+    total = sum(grades_dict[name])
+    count = len(grades_dict[name])
+    avg = total / count
+    averages[name] = avg
+    print("Average of", name, "is:", avg)
 
+    # Checking for the highest average
+    if avg > highest_avg:
+        highest_avg = avg
+        top_student = name
+
+    # Counting passed students
+    if avg >= 50:
+        pass_count += 1
+
+# Printing final results
+print(top_student, "got the highest average.")
+print("Number of students who have passed:", pass_count)
