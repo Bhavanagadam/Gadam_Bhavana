@@ -1,0 +1,394 @@
+def parse_encoded_string(encoded):
+    parts = list(filter(None, encoded.split('0')))
+    print(parts)
+    return {
+        "first_name": parts[0],
+        "last_name": parts[1],
+        "id": parts[2]
+    }
+result = parse_encoded_string("Robert000Smith000123")
+print(result)
+
+#Output
+['Robert', 'Smith', '123']
+{'first_name': 'Robert', 'last_name': 'Smith', 'id': '123'}
+
+
+from collections import Counter
+def find_extra_char(str1, str2):
+    count1 = Counter(str1)
+    count2 = Counter(str2)
+    print(count1)
+    print(count2)
+    for char in count2:
+        if count2[char] != count1.get(char, 0):
+            return char
+print(find_extra_char("eueiieo", "iieoedue"))
+
+#Output
+Counter({'e': 3, 'i': 2, 'u': 1, 'o': 1})
+Counter({'e': 3, 'i': 2, 'o': 1, 'd': 1, 'u': 1})
+d
+
+def is_shadow_sentence(sentence1, sentence2):
+    words1 = sentence1.split()
+    words2 = sentence2.split()
+    if len(words1) != len(words2):
+        return False
+    for w1, w2 in zip(words1, words2):
+        if len(w1) != len(w2):
+            return False
+        if set(w1) & set(w2):
+            return False
+      return True
+print(is_shadow_sentence("they are round", "fold two times"))  
+print(is_shadow_sentence("his friends", "our company"))
+
+#Output
+True
+False
+
+def has_duplicate_letters(sentence):
+    words = sentence.split()
+    for word in words:
+        letters = [char.lower() for char in word if char.isalpha()]
+        if len(letters) != len(set(letters)):
+            return True
+    return False
+print(has_duplicate_letters("Each word here is fine"))        
+print(has_duplicate_letters("This sentence has a letter"))
+
+#Output
+True
+True
+
+
+def ascii_to_hex(ascii_str):
+    return ' '.join(format(ord(char), '02x') for char in ascii_str)
+print(ascii_to_hex("Hello!"))
+def find_blocking_spot(pos1, pos2):
+    winning_lines = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ]
+    for line in winning_lines:
+        if pos1 in line and pos2 in line:
+            for spot in line:
+                if spot != pos1 and spot != pos2:
+                    return spot
+    return None
+print(find_blocking_spot(0, 1))  
+print(find_blocking_spot(2, 5))  
+print(find_blocking_spot(0, 8))
+
+#Output
+48 65 6c 6c 6f 21
+2
+8
+4
+
+
+def to_morse_code(text):
+    morse_dict = {
+        'A': '.-',    'B': '-...',  'C': '-.-.',  'D': '-..',
+        'E': '.',     'F': '..-.',  'G': '--.',   'H': '....',
+        'I': '..',    'J': '.---',  'K': '-.-',   'L': '.-..',
+        'M': '--',    'N': '-.',    'O': '---',   'P': '.--.',
+        'Q': '--.-',  'R': '.-.',   'S': '...',   'T': '-',
+        'U': '..-',   'V': '...-',  'W': '.--',   'X': '-..-',
+        'Y': '-.--',  'Z': '--..',
+        
+        '0': '-----', '1': '.----', '2': '..---', '3': '...--',
+        '4': '....-', '5': '.....', '6': '-....', '7': '--...',
+        '8': '---..', '9': '----.',
+
+        '.': '.-.-.-', ',': '--..--', '?': '..--..', "'": '.----.',
+        '!': '-.-.--', ':': '---...', 
+        ' ': '/'  
+    }
+
+    return ' '.join(morse_dict[char.upper()] for char in text if char.upper() in morse_dict)
+
+print(to_morse_code("Hello, World!"))
+
+# Output
+.... . .-.. .-.. --- --..-- / .-- --- .-. .-.. -.. -.-.--
+
+
+import datetime
+
+def has_friday_13(month, year):
+    try:
+        date = datetime.date(year, month, 13)
+        return date.weekday() == 4
+    except ValueError:
+        return False  
+
+print(has_friday_13(9, 2025))   
+print(has_friday_13(6, 2025))
+
+#Output
+False
+True
+
+def check_input(value):
+    if not isinstance(value, int):
+        raise TypeError("Input must be an integer")
+    if value < 0:
+        raise ValueError("Number must not be negative")
+    if value > 100:
+        raise Exception("Number is too large")
+    print("Valid input:", value)
+
+test_values = ["abc", -10, 150, 50]
+
+for val in test_values:
+    try:
+        check_input(val)
+    except TypeError as te:
+        print("Type Error:", te)
+    except ValueError as ve:
+        print("Value Error:", ve)
+    except Exception as e:
+        print("Other Error:", e)
+
+#Output
+Type Error: Input must be an integer
+Value Error: Number must not be negative
+Other Error: Number is too large
+Valid input: 50
+
+
+class LowBalanceError(Exception):
+    pass
+def withdraw(amount):
+    balance = 500  
+    if amount > balance:
+        raise LowBalanceError("Withdrawal amount exceeds account balance.")
+    else:
+        print("Withdrawal successful.")
+
+try:
+    withdraw(600)
+except LowBalanceError as e:
+    print("Caught an exception:", e)
+
+#Output
+Caught an exception: Withdrawal amount exceeds account balance.'''
+
+
+s="hello"
+print(s[2])
+print(s[-2])
+ 
+ 
+s="python"
+print(s[-7])
+
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("RepartitionExample").getOrCreate()
+data = [("Tom", 25), ("Jerry", 22), ("Mike", 30),("Jack",34),("Rose",32)]
+df = spark.createDataFrame(data, ["name", "age"])
+print("Original partitions:", df.rdd.getNumPartitions())
+print("Original Data:")
+df.show()
+df_repart = df.repartition(3)
+print("After repartition:", df_repart.rdd.getNumPartitions())
+print("Repartitioned Data:")
+df_repart.show()
+
+#Output
+Original partitions: 2
+Original Data:
++-----+---+
+| name|age|
++-----+---+
+|  Tom| 25|
+|Jerry| 22|
+| Mike| 30|
+| Jack| 34|
+| Rose| 32|
++-----+---+
+
+After repartition: 3
+Repartitioned Data:
++-----+---+
+| name|age|
++-----+---+
+|Jerry| 22|
+| Mike| 30|
+|  Tom| 25|
+| Rose| 32|
+| Jack| 34|
++-----+---+
+
+'''SELECT * FROM products
+
+SELECT product_name, unit_price
+FROM products
+WHERE unit_price > (
+    SELECT AVG(unit_price)
+    FROM products
+);
+
+SELECT customer_id, company_name
+FROM customers
+WHERE customer_id IN (
+    SELECT customer_id
+    FROM orders
+    GROUP BY customer_id
+    HAVING COUNT(order_id) > 5
+);
+
+SELECT first_name, last_name
+FROM employees
+WHERE employee_id IN (
+    SELECT employee_id
+    FROM orders
+    WHERE ship_country = 'Germany'
+);
+
+SELECT product_name FROM products WHERE supplier_id IN (
+    SELECT supplier_id
+    FROM suppliers
+    WHERE country = 'USA'
+);
+
+SELECT order_id FROM order_details GROUP BY order_id HAVING SUM(quantity) > 50;'''
+
+
+def wrap_string(S, W):
+    for i in range(0, len(S), W):
+        print(S[i:i+W])
+wrap_string("ABCDEFGHIJKLIMNOQRSTUVWXYZ", 4)
+
+#Output
+ABCD
+EFGH
+IJKL
+IMNO
+QRST
+UVWX
+YZ
+
+
+
+import calendar
+month, day, year = map(int, input().split())
+weekday_num = calendar.weekday(year, month, day)
+weekday_name = calendar.day_name[weekday_num].upper()
+print(weekday_name)
+
+#Output
+06 19 2025
+THURSDAY
+
+
+M = int(input())
+set_M = set(map(int, input().split()))
+N = int(input())
+set_N = set(map(int, input().split()))
+result = sorted(set_M ^ set_N)
+for num in result:
+    print(num)
+
+#Output
+3
+1 2 3
+3 
+3 4 5 
+1
+2
+4
+5
+
+
+text = input()
+reversed_text = text[::-1]
+print(reversed_text)
+
+#Output
+rise to vote sir
+ris etov ot esir
+
+
+
+text = input()
+result = text[::2]
+print(result)
+
+#Output
+H1e2l3l4o5w6o7r8l9d
+Helloworld
+
+
+h = 34
+l = 94
+for i in range(h):
+    t_l = 2 * (h - i) + 4 * i
+    if t_l == l:
+        print(f"Chicken : {i}, Rabbit : {h-i}")
+        break
+
+#Output
+Chicken: 23
+Rabbit: 12
+
+
+list1 = [1, 3, 6, 78, 35, 55]
+list2 = [12, 24, 35, 24, 88, 120, 155]
+set1 = set(list1)
+set2 = set(list2)
+res=set(set1 & set2)
+print(f"Intersection : {list(res)}")
+
+#Output
+Intersection : [35]
+
+
+class Person:
+    def getGender(self):
+        return "Unknown"
+class Male(Person):
+    def getGender(self):
+        return "Male"
+class Female(Person):
+    def getGender(self):
+        return "Female"
+m=Male()
+f=Female()
+print(m.getGender())
+print(f.getGender())
+
+#Output
+Male
+Female
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
